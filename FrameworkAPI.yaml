@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: FrameworkAPI
+  x-ibm-name: FrameworkAPI
+  description: FrameworkAPI
+host: $(catalog.host)
+basePath: /frameworkapi/$(info.version)
+paths:
+  /path:
+    get:
+      responses:
+        '200':
+          description: 200 OK
+securityDefinitions:
+  clientID:
+    description: ''
+    in: header
+    name: X-IBM-Client-Id
+    type: apiKey
+security:
+  - clientID: []
+x-ibm-configuration:
+  assembly:
+    execute:
+      - invoke:
+          target-url: $(target-url)
+consumes:
+  - application/xml
+  - application/json
+schemes:
+  - http
+  - https
+produces:
+  - application/xml
+  - application/json
+parameters:
+  version:
+    name: version
+    type: string
+    required: true
+    in: header
