@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: FrameworkAPI
   x-ibm-name: FrameworkAPI
-  description: FrameworkAPI
+  description: FrameworkAPI - It's cool
 host: $(catalog.host)
 basePath: /frameworkapi/$(info.version)
 paths:
