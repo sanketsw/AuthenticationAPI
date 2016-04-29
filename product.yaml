@@ -2,7 +2,7 @@ product: 1.0.0
 info:
   name: FrameworkProduct
   title: FrameworkProduct
-  version: 1.0.0
+  version: ${project.version}
 apis:
   FrameworkAPI:
     $ref: api.yaml
