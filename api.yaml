@@ -3,7 +3,7 @@ info:
   version: ${project.version}
   title: FrameworkAPI
   x-ibm-name: FrameworkAPI
-  description: FrameworkAPI
+  description: FrameworkAPI - It's cool
 host: $(catalog.host)
 basePath: /frameworkapi/${project.version}
 paths:
