@@ -22,12 +22,14 @@
   <files>
     <file>
       <source>product.yaml</source>
-      <outputDirectory>/</outputDirectory>
       <filtered>true</filtered>
     </file>
     <file>
       <source>api.yaml</source>
-      <outputDirectory>/</outputDirectory>
+      <filtered>true</filtered>
+    </file>
+    <file>
+      <source>install.sh</source>
       <filtered>true</filtered>
     </file>
   </files>

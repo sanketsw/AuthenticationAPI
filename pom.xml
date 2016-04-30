@@ -15,10 +15,10 @@
 				<version>2.6</version>
 				<configuration>
 					<filters>
-						<filter>src/assembly/filter.properties</filter>
+						<filter>${basedir}/src/assembly/filter.properties</filter>
 					</filters>
 					<descriptors>
-						<descriptor>src/assembly/package.xml</descriptor>
+						<descriptor>${basedir}/src/assembly/package.xml</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>
