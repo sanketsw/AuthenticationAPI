@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.0
+  version: ${api.version}
   title: ${api.name}API
   x-ibm-name: ${api.name}API
   description: FrameworkAPI - It's cool
