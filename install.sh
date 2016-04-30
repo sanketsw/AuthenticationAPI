@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script deploys an API to a specified catalog for and Organization. It should be a very rare occasion when this script needs to be modified!
 
 # Input Parameters
 # --m management server url - The url or dns of the API Connect Management Server
@@ -7,15 +8,14 @@
 # --c catalog				- The catalogu to publish the API to 
 # --organization (optional) - The Organization to which the API belongs. The value of this parameter will be text replaced during packaging of this script to 
 #  							  a default value which can be overridden with this parameter
-
 # This paramter will be text replaced by maven at packaging time
 organization=${organization}
 username=
 password=
 managementServer=
 catalog=
-apiName=FrameworkAPI
-apiVersion=1.0.0
+apiName=${api.name}
+apiVersion=${api.version}
 
 # Do user input function
 function usage() {
