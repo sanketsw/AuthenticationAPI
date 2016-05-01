@@ -7,30 +7,38 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>${basedir}</directory>
+      <directory>${basedir}/src/main/yaml</directory>
       <includes>
         <include>*.yaml</include>
+      </includes>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/src/main/script</directory>
+      <includes>
         <include>*.sh</include>
         <include>*.cmd</include>
       </includes>
-      <excludes>
-        <exclude>README.txt</exclude>
-        <exclude>NOTICE.txt</exclude>
-      </excludes>
+      <outputDirectory>/</outputDirectory>
     </fileSet>
   </fileSets>
   <files>
     <file>
-      <source>product.yaml</source>
+      <source>src/main/yaml/product.yaml</source>
       <filtered>true</filtered>
     </file>
     <file>
-      <source>api.yaml</source>
+      <source>src/main/yaml/api.yaml</source>
       <filtered>true</filtered>
     </file>
     <file>
-      <source>install.sh</source>
+      <source>src/main/script/install.sh</source>
       <filtered>true</filtered>
+    </file>
+    <file>
+      <source>src/main/javascript/sandbox-frameworkapi-config.js</source>
+      <filtered>true</filtered>
+      <destName>sandbox-frameworkapi-config-${api.version}.js</destName>
     </file>
   </files>
 </assembly>

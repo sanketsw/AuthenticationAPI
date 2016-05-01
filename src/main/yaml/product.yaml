@@ -1,7 +1,7 @@
 product: 1.0.0
 info:
-  name: ${api.name}Product
-  title: ${api.name}Product
+  name: ${artifactId}Product
+  title: ${artifactId}Product
   version: 1.0.0
 apis:
   FrameworkAPI:
