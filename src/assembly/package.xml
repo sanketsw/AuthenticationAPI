@@ -38,7 +38,7 @@
     <file>
       <source>src/main/js/Sandbox${artifactId}Config.js</source>
       <filtered>true</filtered>
-      <destName>Sandbox${artifactId}Config.js-${api.version}.js</destName>
+      <destName>Sandbox${artifactId}Config-${api.version}.js</destName>
     </file>
   </files>
 </assembly>
