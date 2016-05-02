@@ -1,4 +1,4 @@
-package com.anz.apic.test.frameworkapi;
+package com.anz.apic.org.frameworkapi;
 
 
 import org.junit.runner.RunWith;
