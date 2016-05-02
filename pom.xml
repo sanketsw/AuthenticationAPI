@@ -26,11 +26,40 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.anz</groupId>
+			<artifactId>apic-commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<classifier>package</classifier>
+			<type>zip</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-js-resources</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-test-resources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/framework/js</outputDirectory>
+							<includeArtifacIds>apic-commons</includeArtifacIds>
+							<includeGroupIds>com.anz</includeGroupIds>
+							<excludeTransitive>true</excludeTransitive>
+							<excludeTypes>pom</excludeTypes>
+							<scope>test</scope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

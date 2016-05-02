@@ -5,13 +5,14 @@
   <formats>
     <format>zip</format>
   </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
       <directory>${basedir}/src/main/yaml</directory>
       <includes>
         <include>*.yaml</include>
       </includes>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>${basedir}/src/main/script</directory>
@@ -19,7 +20,7 @@
         <include>*.sh</include>
         <include>*.cmd</include>
       </includes>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>.</outputDirectory>
     </fileSet>
   </fileSets>
   <files>
