@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.anz</groupId>
 			<artifactId>apic-commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.4</version>
 			<classifier>package</classifier>
 			<type>zip</type>
 			<scope>test</scope>
