@@ -99,4 +99,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	<scm>
+		<url>scm:git:https://github.com/edwinquaihoi/org-framework-api.git</url>
+		<connection>scm:git:https://github.com/edwinquaihoi/org-framework-api.git</connection>
+		<developerConnection>scm:git:https://github.com/edwinquaihoi/org-framework-api.git</developerConnection>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>release</id>
+			<url>http://localhost:8081/artifactory/ext-release-local</url>
+			<uniqueVersion>true</uniqueVersion>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot</id>
+			<url>http://localhost:8081/artifactory/ext-snapshot-local</url>
+			<uniqueVersion>true</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
