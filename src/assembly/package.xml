@@ -21,6 +21,7 @@
         <include>*.cmd</include>
       </includes>
       <outputDirectory>.</outputDirectory>
+      <fileMode>0755</fileMode>
     </fileSet>
   </fileSets>
   <files>
