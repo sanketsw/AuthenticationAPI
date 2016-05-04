@@ -43,5 +43,9 @@
       <filtered>true</filtered>
       <destName>Sandbox${artifactId}Config-${api.version}.js</destName>
     </file>
+    <file>
+      <source>src/main/dcm/dcm-upload-definition.xml</source>
+      <filtered>true</filtered>
+    </file>
   </files>
 </assembly>
