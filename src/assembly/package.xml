@@ -36,6 +36,7 @@
     <file>
       <source>src/main/script/install.sh</source>
       <filtered>true</filtered>
+      <fileMode>0755</fileMode>
     </file>
     <file>
       <source>src/main/js/Sandbox${artifactId}Config.js</source>
