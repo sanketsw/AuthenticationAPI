@@ -1,12 +1,17 @@
 swagger: '2.0'
 info:
-  version: ${api.version}
-  title: ${project.artifactId}
-  x-ibm-name: ${artifactId}
+  version: '${api.version}'
+  title: '${project.artifactId}'
+  x-ibm-name: '${artifactId}'
   description: FrameworkAPI - It's cool
 host: $(catalog.host)
-basePath: /${api.organization}/${project.artifactId}/${api.version}
+basePath: '/${api.organization}/${project.artifactId}/${api.version}'
 paths:
+  /path-1:
+    get:
+      responses:
+        '200':
+          description: 200 OK
   /path:
     get:
       responses:
@@ -23,8 +28,39 @@ security:
 x-ibm-configuration:
   assembly:
     execute:
-      - invoke:
-          target-url: $(target-url)
+      - gatewayscript:
+          title: Log Request
+          source: >-
+            var frameworkDir = 'local:///ondisk/js/apic/framework/';
+
+            var configDir = '${api.config.dir}'; 
+
+            var util = require(frameworkDir + 'Util.js');
+
+            var apiConfig = util.loadApiConfig(frameworkDir,
+            configDir,"PublicSandbox", "FrameworkAPI","1.0.0", console);
+
+
+            apiConfig.info('Hello World Start');
+      - gatewayscript:
+          title: Log Response
+          source: >-
+            var frameworkDir = 'local:///ondisk/js/apic/framework/';
+
+            var configDir = '${api.config.dir}'; 
+
+            var util = require(frameworkDir + 'Util.js');
+
+            var apiConfig = util.loadApiConfig(frameworkDir,
+            configDir,"PublicSandbox", "FrameworkAPI","1.0.0", console);
+
+
+            apiConfig.info('Hello World End');
+  catalogs:
+    catalog-name-1:
+      properties:
+        new-property-1: ''
+  gateway: datapower-gateway
 consumes:
   - application/xml
   - application/json
@@ -34,9 +70,3 @@ schemes:
 produces:
   - application/xml
   - application/json
-parameters:
-  version:
-    name: version
-    type: string
-    required: true
-    in: header
