@@ -1,11 +1,11 @@
 swagger: '2.0'
 info:
   version: ${api.version}
-  title: ${artifactId}
+  title: ${project.artifactId}
   x-ibm-name: ${artifactId}
   description: FrameworkAPI - It's cool
 host: $(catalog.host)
-basePath: /${artifactId}/${api.version}
+basePath: /${api.organization}/${project.artifactId}/${api.version}
 paths:
   /path:
     get:
