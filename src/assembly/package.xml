@@ -13,6 +13,7 @@
         <include>*.yaml</include>
       </includes>
       <outputDirectory>.</outputDirectory>
+      <filtered>true</filtered>
     </fileSet>
     <fileSet>
       <directory>${basedir}/src/main/script</directory>
@@ -22,30 +23,37 @@
       </includes>
       <outputDirectory>.</outputDirectory>
       <fileMode>0755</fileMode>
+      <filtered>true</filtered>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/src/main/dcm/</directory>
+      <includes>
+        <include>*.xml</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+      <filtered>true</filtered>
     </fileSet>
   </fileSets>
   <files>
     <file>
-      <source>src/main/yaml/product.yaml</source>
+      <source>${basedir}/src/main/js/PublicConfig.js</source>
       <filtered>true</filtered>
+      <destName>${artifactId}PublicConfig-${api.version}.js</destName>
     </file>
     <file>
-      <source>src/main/yaml/api.yaml</source>
+      <source>${basedir}/src/main/js/PublicSandboxConfig.js</source>
       <filtered>true</filtered>
+      <destName>${artifactId}PublicSandboxConfig-${api.version}.js</destName>
     </file>
     <file>
-      <source>src/main/script/install.sh</source>
+      <source>${basedir}/src/main/js/PrivateConfig.js</source>
       <filtered>true</filtered>
-      <fileMode>0755</fileMode>
+      <destName>${artifactId}PrivateConfig-${api.version}.js</destName>
     </file>
     <file>
-      <source>src/main/js/Sandbox${artifactId}Config.js</source>
+      <source>${basedir}/src/main/js/PrivateSandboxConfig.js</source>
       <filtered>true</filtered>
-      <destName>Sandbox${artifactId}Config-${api.version}.js</destName>
-    </file>
-    <file>
-      <source>src/main/dcm/dcm-upload-definition.xml</source>
-      <filtered>true</filtered>
+      <destName>${artifactId}PrivateSandboxConfig-${api.version}.js</destName>
     </file>
   </files>
 </assembly>

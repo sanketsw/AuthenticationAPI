@@ -5,7 +5,7 @@ var configLocation = currentWorkingDir + '/src/main/js/';
 var Require = load('src/main/js/Require.js');
 var require = Require( './' , [ configLocation, frameworkLocation] );
 
-describe("FrameworkAPIConfigTest",function() {
+describe("PublicSandboxConfigTest",function() {
 
 
 	// spy object to replace console
@@ -23,7 +23,7 @@ describe("FrameworkAPIConfigTest",function() {
 					
 		var util = require("Util.js");
 		
-		var apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "Sandbox", "FrameworkAPI","1.0.0", console);
+		var apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbox", "","1.0.0", console);
 
 		expect(apiConfig).toBeNull();
 	});
@@ -35,7 +35,7 @@ describe("FrameworkAPIConfigTest",function() {
 		
 		console.debug(util);
 
-		var apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "Sandbox", "FrameworkAPI","", console);
+		var apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbox", "","", console);
 		
 		console.debug(apiConfig);
 		expect(apiConfig.name).toEqual("${artifactId}");

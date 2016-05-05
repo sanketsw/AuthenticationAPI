@@ -6,8 +6,16 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<!-- This property decouples api version from maven version. Update this in one location and it will permeate across source files at package time. -->
 		<api.version>1.0.0</api.version>
+		
+		<!-- The API Connect Provider Organization this API belongs to. -->
 		<api.organization>test</api.organization>
+		
+		<!-- Leave this value as is it is convention. At some point we should move this to a parent POM -->
+		<api.config.dir>local:///ondisk/js/apic/${api.organization}/${artifactId}</api.config.dir>
+		
+		<api.framework.version>0.0.6</api.framework.version>
 	</properties>
 
 	<dependencies>
@@ -28,7 +36,7 @@
 		<dependency>
 			<groupId>com.anz</groupId>
 			<artifactId>apic-commons</artifactId>
-			<version>0.0.4</version>
+			<version>${api.framework.version}</version>
 			<classifier>package</classifier>
 			<type>zip</type>
 			<scope>test</scope>

@@ -9,8 +9,8 @@ import de.helwich.junit.JasmineTestRunner;
 @RunWith(JasmineTestRunner.class)
 @JasmineTest(
     src =  { "Require" },
-    test = { "SandboxFrameworkAPIConfigTest"},
+    test = { "PublicSandboxConfigTest"},
     browser = false
 )
-public class FrameworkAPIConfigTest {
+public class CatalogConfigTest {
 }

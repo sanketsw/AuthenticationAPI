@@ -1,5 +1,5 @@
 <dcm:definition xmlns:dcm="urn:datapower:configuration:manager">
 	
-	<dcm:upload localdir="${deploy.dir}" match="*.js" remotedir="local:///ondisk/js/apic/${api.organization}/FrameworkAPI/"/>
+	<dcm:upload localdir="${deploy.dir}" match="*.js" remotedir="${api.config.dir}"/>
 	
 </dcm:definition>
