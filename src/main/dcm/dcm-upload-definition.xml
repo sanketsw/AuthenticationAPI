@@ -1,5 +1,11 @@
 <dcm:definition xmlns:dcm="urn:datapower:configuration:manager">
 	
-	<dcm:upload localdir="${deploy.dir}" match="*.js" remotedir="${api.config.dir}"/>
+	<dcm:upload environment="PublicSandbox" localdir="${deploy.dir}" match="PublicSandbox*.js" remotedir="${api.config.dir}"/>
+	
+	<dcm:upload environment="Public" localdir="${deploy.dir}" match="Public*.js" remotedir="${api.config.dir}"/>
+	
+	<dcm:upload environment="PrivateSandbox" localdir="${deploy.dir}" match="PrivateSandbox*.js" remotedir="${api.config.dir}"/>
+	
+	<dcm:upload environment="Private" localdir="${deploy.dir}" match="Private*.js" remotedir="${api.config.dir}"/>
 	
 </dcm:definition>
