@@ -42,6 +42,14 @@ x-ibm-configuration:
 
 
             apiConfig.info('Hello World Start');
+      - proxy:
+          title: proxy
+          timeout: 60
+          verb: keep
+          cache-response: protocol
+          cache-ttl: 900
+          target-url: 'http://jsonplaceholder.typicode.com/users'
+          
       - gatewayscript:
           title: Log Response
           source: >-
@@ -65,7 +73,6 @@ consumes:
   - application/xml
   - application/json
 schemes:
-  - http
   - https
 produces:
   - application/xml
