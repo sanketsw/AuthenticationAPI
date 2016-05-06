@@ -41,7 +41,7 @@ function apicLogin() {
 	
 	# if login failed exit
 	result=$?
-	if [[ $result -gt 0 ]]
+	if [[ $result -ne 0 ]]
 	then
 		echo "Deployment of API $apiName version $apiVersion to catalog $catalog failed."
 		exit 1
