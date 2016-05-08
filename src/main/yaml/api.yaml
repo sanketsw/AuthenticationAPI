@@ -7,11 +7,23 @@ info:
 host: $(catalog.host)
 basePath: '/${api.organization}/${project.artifactId}/${api.version}'
 paths:
-  /path-1:
+  /resources:
     get:
       responses:
         '200':
           description: 200 OK
+    post:
+      responses:
+        '200':
+          description: 200 OK
+        '201':
+          description: 201 CREATED
+        '400':
+          description: 400 BAD REQUEST
+        '404':
+          description: 404 NOT FOUND
+        '500':
+          description: 500 INTERNAL SERVER ERROR
   /path:
     get:
       responses:
@@ -49,7 +61,6 @@ x-ibm-configuration:
           cache-response: protocol
           cache-ttl: 900
           target-url: 'http://jsonplaceholder.typicode.com/users'
-          
       - gatewayscript:
           title: Log Response
           source: >-
