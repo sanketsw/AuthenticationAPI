@@ -14,7 +14,7 @@ username=
 password=
 managementServer=
 catalog=
-apiName=${artifactId}
+apiName=${project.artifactId}
 apiVersion=${api.version}
 
 # Do user input function
