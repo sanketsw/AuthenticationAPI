@@ -43,15 +43,9 @@ x-ibm-configuration:
       - gatewayscript:
           title: Log Request
           source: >-
-            var frameworkDir = 'local:///ondisk/js/apic/framework/';
+            var util = require('${api.framework.dir}/Util.js');
 
-            var configDir = '${api.config.dir}'; 
-
-            var util = require(frameworkDir + 'Util.js');
-
-            var apiConfig = util.loadApiConfig(frameworkDir,
-            configDir,"PublicSandbox", "FrameworkAPI","1.0.0", console);
-
+            var apiConfig = util.loadApiConfig('${api.framework.dir}','${api.config.dir}','PublicSandbox','${project.artifactId}}','${api.version}', console);
 
             apiConfig.info('Hello World Start');
       - proxy:
@@ -64,17 +58,11 @@ x-ibm-configuration:
       - gatewayscript:
           title: Log Response
           source: >-
-            var frameworkDir = 'local:///ondisk/js/apic/framework/';
+            var util = require('${api.framework.dir}/Util.js');
 
-            var configDir = '${api.config.dir}'; 
+            var apiConfig = util.loadApiConfig('${api.framework.dir}','${api.config.dir}','PublicSandbox','${project.artifactId}}','${api.version}', console);
 
-            var util = require(frameworkDir + 'Util.js');
-
-            var apiConfig = util.loadApiConfig(frameworkDir,
-            configDir,"PublicSandbox", "FrameworkAPI","1.0.0", console);
-
-
-            apiConfig.info('Hello World End');
+            apiConfig.info('Hello World Start');
   catalogs:
     catalog-name-1:
       properties:
