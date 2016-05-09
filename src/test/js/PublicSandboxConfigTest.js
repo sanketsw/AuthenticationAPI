@@ -21,9 +21,14 @@ describe("PublicSandboxConfigTest",function() {
 
 	it("testNoSandboxConfig", function() {
 					
-		var util = require("Util.js");
-		
-		var apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbox", "","1.0.0", console);
+		var apiConfig;
+		try {
+			var util = require("Util.js");
+			// pass name and version s null as they are used to construct name of config file. during test the file doesn't contain these name components.
+			apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbo", "","", console);
+		} catch(e) {
+			console.debug(e);
+		}
 
 		expect(apiConfig).toBeNull();
 	});
