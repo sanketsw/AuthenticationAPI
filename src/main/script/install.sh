@@ -9,7 +9,7 @@
 # --organization (optional) - The Organization to which the API belongs. The value of this parameter will be text replaced during packaging of this script to 
 #  							  a default value which can be overridden with this parameter
 # This paramter will be text replaced by maven at packaging time
-organization=${api.organization}
+organization=${project.organization.name}
 username=
 password=
 managementServer=
