@@ -33,27 +33,13 @@
       <outputDirectory>.</outputDirectory>
       <filtered>true</filtered>
     </fileSet>
+    <fileSet>
+      <directory>${basedir}/src/main/js/</directory>
+      <includes>
+        <include>*.js</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+      <filtered>true</filtered>
+    </fileSet>
   </fileSets>
-  <files>
-    <file>
-      <source>${basedir}/src/main/js/PublicConfig.js</source>
-      <filtered>true</filtered>
-      <destName>${artifactId}PublicConfig.js</destName>
-    </file>
-    <file>
-      <source>${basedir}/src/main/js/PublicSandboxConfig.js</source>
-      <filtered>true</filtered>
-      <destName>${artifactId}PublicSandboxConfig.js</destName>
-    </file>
-    <file>
-      <source>${basedir}/src/main/js/PrivateConfig.js</source>
-      <filtered>true</filtered>
-      <destName>${artifactId}PrivateConfig.js</destName>
-    </file>
-    <file>
-      <source>${basedir}/src/main/js/PrivateSandboxConfig.js</source>
-      <filtered>true</filtered>
-      <destName>${artifactId}PrivateSandboxConfig.js</destName>
-    </file>
-  </files>
 </assembly>

@@ -13,7 +13,7 @@
 		<!-- This property decouples api version from maven version. Update this in one location and it will permeate across source files at package time. -->
 		<api.version>1.0.0</api.version>
 		
-		<api.framework.version>0.0.13</api.framework.version>
+		<api.framework.version>0.0.14</api.framework.version>
 
 		<api.base.dir>local:///ondisk/js/api</api.base.dir>
 		
