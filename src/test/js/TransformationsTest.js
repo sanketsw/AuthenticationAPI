@@ -29,7 +29,7 @@ describe("TransformationsTest",function() {
 		console.debug.and.callFake(log);
 	});
 
-	it("testTransformMessageBody", function() {
+	it("testTransformRequestMessageBody", function() {
 
 		try {
 			var transformations = require("Transformations.js");
@@ -53,7 +53,7 @@ describe("TransformationsTest",function() {
 				return body;
 			});			
 			
-			var result = transformations.transformMessageBody(frameworkLocation, api, apim);
+			var result = transformations.transformRequestMessageBody(frameworkLocation, api, apim);
 			var expectedResults = '{"foo":[{"bar":"A"},{"bar":"B"}]}';
 			var actualResults = JSON.stringify(result);
 			

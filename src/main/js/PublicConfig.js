@@ -1,3 +1,7 @@
+/**
+ * API Version : ${api.version}
+ */
+
 var name="${artifactId}";
 var version="${api.version}";
 var logLevel=7;

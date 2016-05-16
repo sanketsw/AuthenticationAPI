@@ -13,15 +13,16 @@
 		<!-- This property decouples api version from maven version. Update this in one location and it will permeate across source files at package time. -->
 		<api.version>1.0.0</api.version>
 		
+		<api.framework.version>0.0.13</api.framework.version>
+
 		<api.base.dir>local:///ondisk/js/api</api.base.dir>
 		
 		<!-- Location of framework modules on the datapower. -->
-		<api.framework.dir>${api.base.dir}/fw</api.framework.dir>
+		<api.framework.dir>${api.base.dir}/fw/${api.framework.version}</api.framework.dir>
 		
 		<!-- Leave this value as is it is convention. At some point we should move this to a parent POM -->
-		<api.config.dir>${api.base.dir}/${project.organization.name}/${project.artifactId}</api.config.dir>
+		<api.config.dir>${api.base.dir}/${project.organization.name}/${project.artifactId}/${project.version}</api.config.dir>
 		
-		<api.framework.version>0.0.11-SNAPSHOT</api.framework.version>
 	</properties>
 
 	<dependencies>

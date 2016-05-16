@@ -38,22 +38,22 @@
     <file>
       <source>${basedir}/src/main/js/PublicConfig.js</source>
       <filtered>true</filtered>
-      <destName>${artifactId}PublicConfig-${api.version}.js</destName>
+      <destName>${artifactId}PublicConfig.js</destName>
     </file>
     <file>
       <source>${basedir}/src/main/js/PublicSandboxConfig.js</source>
       <filtered>true</filtered>
-      <destName>${artifactId}PublicSandboxConfig-${api.version}.js</destName>
+      <destName>${artifactId}PublicSandboxConfig.js</destName>
     </file>
     <file>
       <source>${basedir}/src/main/js/PrivateConfig.js</source>
       <filtered>true</filtered>
-      <destName>${artifactId}PrivateConfig-${api.version}.js</destName>
+      <destName>${artifactId}PrivateConfig.js</destName>
     </file>
     <file>
       <source>${basedir}/src/main/js/PrivateSandboxConfig.js</source>
       <filtered>true</filtered>
-      <destName>${artifactId}PrivateSandboxConfig-${api.version}.js</destName>
+      <destName>${artifactId}PrivateSandboxConfig.js</destName>
     </file>
   </files>
 </assembly>
