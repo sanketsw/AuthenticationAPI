@@ -1,11 +1,11 @@
 <dcm:definition xmlns:dcm="urn:datapower:configuration:manager">
 	
-	<dcm:upload environment="public-sandbox" localdir="${deploy.dir}" match="${project.artifactId}PublicSandboxConfig.js" remotedir="${api.config.dir}"/>
+	<dcm:upload environment="public-sandbox" localdir="${deploy.dir}" match="PublicSandboxConfig.js" remotedir="${api.config.dir}"/>
 	
-	<dcm:upload environment="public" localdir="${deploy.dir}" match="${project.artifactId}PublicConfig.js" remotedir="${api.config.dir}"/>
+	<dcm:upload environment="public" localdir="${deploy.dir}" match="PublicConfig.js" remotedir="${api.config.dir}"/>
 	
-	<dcm:upload environment="private-sandbox" localdir="${deploy.dir}" match="${project.artifactId}PrivateSandboxConfig.js" remotedir="${api.config.dir}"/>
+	<dcm:upload environment="private-sandbox" localdir="${deploy.dir}" match="PrivateSandboxConfig.js" remotedir="${api.config.dir}"/>
 	
-	<dcm:upload environment="private" localdir="${deploy.dir}" match="${project.artifactId}PrivateConfig.js" remotedir="${api.config.dir}"/>
+	<dcm:upload environment="private" localdir="${deploy.dir}" match="PrivateConfig.js" remotedir="${api.config.dir}"/>
 	
 </dcm:definition>
