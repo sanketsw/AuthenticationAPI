@@ -9,7 +9,7 @@ import de.helwich.junit.JasmineTestRunner;
 @RunWith(JasmineTestRunner.class)
 @JasmineTest(
     src =  { "lib/Require" },
-    test = { "PublicSandboxConfigTest"},
+    test = { "b2bConfigTest"},
     browser = false
 )
 public class CatalogConfigTest {

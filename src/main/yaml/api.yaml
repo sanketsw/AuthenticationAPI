@@ -4,27 +4,86 @@ info:
   title: '${project.artifactId}'
   x-ibm-name: '${artifactId}'
   description: '${project.artifactId}'
+  contact:
+    name: Edwin
 host: $(catalog.host)
 basePath: '/${project.artifactId}/${api.version}'
 paths:
-  /resources:
+  /photos:
     get:
       responses:
         '200':
           description: 200 OK
-    post:
+  '/albums/{id}':
+    get:
       responses:
         '200':
           description: 200 OK
-        '201':
-          description: 201 CREATED
-        '400':
-          description: 400 BAD REQUEST
-        '404':
-          description: 404 NOT FOUND
-        '500':
-          description: 500 INTERNAL SERVER ERROR
-  /path:
+    parameters:
+      - name: id
+        type: string
+        required: true
+        in: path
+  /albums:
+    get:
+      responses:
+        '200':
+          description: 200 OK
+  '/comments/{id}':
+    get:
+      responses:
+        '200':
+          description: 200 OK
+    parameters:
+      - name: id
+        type: string
+        required: true
+        in: path
+        description: comments id
+  /comments:
+    get:
+      responses:
+        '200':
+          description: 200 OK
+  '/posts/{id}/comments':
+    get:
+      responses:
+        '200':
+          description: 200 OK
+    parameters:
+      - name: id
+        type: string
+        required: true
+        in: path
+        description: post id
+  '/posts/{id}':
+    get:
+      responses:
+        '200':
+          description: 200 OK
+    parameters:
+      - name: id
+        type: string
+        required: true
+        in: path
+        description: post id
+  /posts:
+    get:
+      responses:
+        '200':
+          description: 200 OK
+  '/users/{id}':
+    get:
+      responses:
+        '200':
+          description: 200 OK
+    parameters:
+      - name: id
+        type: string
+        required: true
+        in: path
+        description: user id
+  /users:
     get:
       responses:
         '200':
@@ -40,39 +99,151 @@ security:
 x-ibm-configuration:
   assembly:
     execute:
+      - operation-switch:
+          title: operation-switch
+          case:
+            - operations:
+                - verb: get
+                  path: /photos
+              execute:
+                - gatewayscript:
+                    title: getPhotos
+                    source: 'apim.setvariable(''operation'',''getPhotos'');'
+            - operations:
+                - verb: get
+                  path: '/albums/{id}'
+              execute:
+                - gatewayscript:
+                    title: getAlbumById
+                    source: 'apim.setvariable(''operation'',''getAlbumById'');'
+            - operations:
+                - verb: get
+                  path: /albums
+              execute:
+                - gatewayscript:
+                    title: getAlbums
+                    source: 'apim.setvariable(''operation'',''getAlbums'');'
+            - operations:
+                - verb: get
+                  path: '/comments/{id}'
+              execute:
+                - gatewayscript:
+                    title: getCommentsById
+                    source: 'apim.setvariable(''operation'',''getCommentsById'');'
+            - operations:
+                - verb: get
+                  path: /comments
+              execute:
+                - gatewayscript:
+                    title: getComments
+                    source: 'apim.setvariable(''operation'',''getComments'');'
+            - operations:
+                - verb: get
+                  path: '/posts/{id}/comments'
+              execute:
+                - gatewayscript:
+                    title: getCommentsByPostId
+                    source: 'apim.setvariable(''operation'',''getCommentsByPostId'');'
+            - operations:
+                - verb: get
+                  path: '/posts/{id}'
+              execute:
+                - gatewayscript:
+                    title: getPostsById
+                    source: 'apim.setvariable(''operation'',''getPostsById'');'
+            - operations:
+                - verb: get
+                  path: /posts
+              execute:
+                - gatewayscript:
+                    title: getPosts
+                    source: 'apim.setvariable(''operation'',''getPosts'');'
+            - operations:
+                - verb: get
+                  path: '/users/{id}'
+              execute:
+                - gatewayscript:
+                    title: getUsersById
+                    source: 'apim.setvariable(''operation'',''getUsersById'');'
+            - operations:
+                - verb: get
+                  path: /users
+              execute:
+                - gatewayscript:
+                    title: getUsers
+                    source: 'apim.setvariable(''operation'',''getUsers'');'
       - gatewayscript:
           title: Log Request
-          source: >-
+          source: >
             var util = require('${api.framework.dir}/Util.js');
 
-            var apiConfig = util.loadApiConfig('${api.framework.dir}','${api.config.dir}','PublicSandbox','${project.artifactId}}','${api.version}', console);
+            var apiConfig =
+            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            console);
 
-            apiConfig.info('Hello World Start');
+
+            // log request headers
+
+            apiConfig.logHeaders(apim);
+
+            apiConfig.logBody(apim);
+      - gatewayscript:
+          title: Setup
+          source: >-
+            // Load API Config
+
+            var util = require('${api.framework.dir}/Util.js');
+
+            var apiConfig =
+            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            console);
+
+
+            // get the operation and method being executed
+
+            var operation = apim.getvariable('operation');
+
+            var method  = apim.getvariable('request.verb');
+
+
+            // set the targetUrl
+
+            apim.setvariable('targetUrl',apiConfig.getOperation(operation).getMethod(method).targetUrl);
+
+
+            apiConfig.logger.info(apim.getvariable('request.uri'));
+
+            apiConfig.logger.info(apim.getvariable('request.path'));
       - proxy:
-          title: proxy
+          title: Invoke uService
           timeout: 60
           verb: keep
           cache-response: protocol
           cache-ttl: 900
-          target-url: 'http://jsonplaceholder.typicode.com/users'
+          target-url: $(targetUrl)
       - gatewayscript:
           title: Log Response
           source: >-
             var util = require('${api.framework.dir}/Util.js');
 
-            var apiConfig = util.loadApiConfig('${api.framework.dir}','${api.config.dir}','PublicSandbox','${project.artifactId}}','${api.version}', console);
+            var apiConfig =
+            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            console);
 
-            apiConfig.info('Hello World Start');
+
+            // log request headers
+
+            apiConfig.logHeaders(apim);
+
+            apiConfig.logBody(apim);
   catalogs:
     catalog-name-1:
       properties:
         new-property-1: ''
   gateway: datapower-gateway
 consumes:
-  - application/xml
   - application/json
 schemes:
   - https
 produces:
-  - application/xml
   - application/json
