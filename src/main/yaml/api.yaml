@@ -178,7 +178,7 @@ x-ibm-configuration:
             var util = require('${api.framework.dir}/Util.js');
 
             var apiConfig =
-            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
 
@@ -195,7 +195,7 @@ x-ibm-configuration:
             var util = require('${api.framework.dir}/Util.js');
 
             var apiConfig =
-            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
 
@@ -218,7 +218,7 @@ x-ibm-configuration:
           title: Invoke uService
           timeout: 60
           verb: keep
-          cache-response: protocol
+          cache-response: time-to-live
           cache-ttl: 900
           target-url: $(targetUrl)
       - gatewayscript:
@@ -227,7 +227,7 @@ x-ibm-configuration:
             var util = require('${api.framework.dir}/Util.js');
 
             var apiConfig =
-            util.loadApiConfig('${api.framework.dir}','${api.config.dir}',apim.getvariable('env.apth'),'${project.artifactId}}','${api.version}',
+            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
 
