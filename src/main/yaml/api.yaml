@@ -9,42 +9,6 @@ info:
 host: $(catalog.host)
 basePath: '/${project.artifactId}/${api.version}'
 paths:
-  /photos:
-    get:
-      responses:
-        '200':
-          description: 200 OK
-  '/albums/{id}':
-    get:
-      responses:
-        '200':
-          description: 200 OK
-    parameters:
-      - name: id
-        type: string
-        required: true
-        in: path
-  /albums:
-    get:
-      responses:
-        '200':
-          description: 200 OK
-  '/comments/{id}':
-    get:
-      responses:
-        '200':
-          description: 200 OK
-    parameters:
-      - name: id
-        type: string
-        required: true
-        in: path
-        description: comments id
-  /comments:
-    get:
-      responses:
-        '200':
-          description: 200 OK
   '/posts/{id}/comments':
     get:
       responses:
@@ -72,22 +36,6 @@ paths:
       responses:
         '200':
           description: 200 OK
-  '/users/{id}':
-    get:
-      responses:
-        '200':
-          description: 200 OK
-    parameters:
-      - name: id
-        type: string
-        required: true
-        in: path
-        description: user id
-  /users:
-    get:
-      responses:
-        '200':
-          description: 200 OK
 securityDefinitions:
   clientID:
     description: ''
@@ -104,82 +52,34 @@ x-ibm-configuration:
           case:
             - operations:
                 - verb: get
-                  path: /photos
-              execute:
-                - gatewayscript:
-                    title: getPhotos
-                    source: 'apim.setvariable(''operation'',''getPhotos'');'
-            - operations:
-                - verb: get
-                  path: '/albums/{id}'
-              execute:
-                - gatewayscript:
-                    title: getAlbumById
-                    source: 'apim.setvariable(''operation'',''getAlbumById'');'
-            - operations:
-                - verb: get
-                  path: /albums
-              execute:
-                - gatewayscript:
-                    title: getAlbums
-                    source: 'apim.setvariable(''operation'',''getAlbums'');'
-            - operations:
-                - verb: get
-                  path: '/comments/{id}'
-              execute:
-                - gatewayscript:
-                    title: getCommentsById
-                    source: 'apim.setvariable(''operation'',''getCommentsById'');'
-            - operations:
-                - verb: get
-                  path: /comments
-              execute:
-                - gatewayscript:
-                    title: getComments
-                    source: 'apim.setvariable(''operation'',''getComments'');'
-            - operations:
-                - verb: get
                   path: '/posts/{id}/comments'
               execute:
                 - gatewayscript:
-                    title: getCommentsByPostId
-                    source: 'apim.setvariable(''operation'',''getCommentsByPostId'');'
+                    title: getPostComments
+                    source: "apim.setvariable('operation','getPostComments');"
             - operations:
                 - verb: get
                   path: '/posts/{id}'
               execute:
                 - gatewayscript:
-                    title: getPostsById
-                    source: 'apim.setvariable(''operation'',''getPostsById'');'
+                    title: getPostById
+                    source: "apim.setvariable('operation','getPostById');"
             - operations:
                 - verb: get
                   path: /posts
               execute:
                 - gatewayscript:
                     title: getPosts
-                    source: 'apim.setvariable(''operation'',''getPosts'');'
-            - operations:
-                - verb: get
-                  path: '/users/{id}'
-              execute:
-                - gatewayscript:
-                    title: getUsersById
-                    source: 'apim.setvariable(''operation'',''getUsersById'');'
-            - operations:
-                - verb: get
-                  path: /users
-              execute:
-                - gatewayscript:
-                    title: getUsers
-                    source: 'apim.setvariable(''operation'',''getUsers'');'
+                    source: "apim.setvariable('operation','getPosts');"
       - gatewayscript:
           title: Log Request
           source: >
             var util = require('${api.framework.dir}/Util.js');
 
-            var apiConfig =
-            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
+            var apiConfig
+            = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
+
 
 
             // log request headers
@@ -194,9 +94,10 @@ x-ibm-configuration:
 
             var util = require('${api.framework.dir}/Util.js');
 
-            var apiConfig =
-            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
+            var apiConfig
+            = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
+
 
 
             // get the operation and method being executed
@@ -206,29 +107,72 @@ x-ibm-configuration:
             var method  = apim.getvariable('request.verb');
 
 
+
             // set the targetUrl
 
             apim.setvariable('targetUrl',apiConfig.getOperation(operation).getMethod(method).targetUrl);
 
 
-            apiConfig.logger.info(apim.getvariable('request.uri'));
 
-            apiConfig.logger.info(apim.getvariable('request.path'));
-      - proxy:
-          title: Invoke uService
-          timeout: 60
-          verb: keep
-          cache-response: time-to-live
-          cache-ttl: 900
-          target-url: $(targetUrl)
+            var preTransformMethod = operation + 'PreTransform';
+
+            apim.setvariable('preTransformMethod', preTransformMethod);
+
+
+
+            var postTransformMethod = operation + 'PostTransform';
+
+            apim.setvariable('postTransformMethod', postTransformMethod);
+
+
+
+            apiConfig.logger.debug(apim.getvariable('request.uri'));
+
+            apiConfig.logger.debug(apim.getvariable('request.path'));
+      - gatewayscript:
+          title: PreTransform
+          source: "// Load API Config\nvar util = require('${api.framework.dir}/Util.js');\nvar apiConfig = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}', console);\n\nvar transformer = require('${api.config.dir}/Transformations.js');\n\nvar transformMethodName = apim.getvariable('preTransformMethod');\nvar transformMethod = transformer[transformMethodName];\n\nif (transformMethod != null && typeof transformMethod === \"function\") {\n    var bodi = apim.getvariable('message.body');\n    var output = transformMethod('${api.framework.dir}/', apiConfig, apim);\n    \n    session.output.write(output);\n    apim.output('application/json');\n}"
+      - operation-switch:
+          title: Invoke URL switch
+          case:
+            - operations:
+                - verb: get
+                  path: '/posts/{id}'
+              execute:
+                - invoke:
+                    title: invoke
+                    timeout: 60
+                    verb: GET
+                    cache-response: no-cache
+                    cache-ttl: 900
+                    target-url: $(targetUrl)
+            - operations:
+                - verb: get
+                  path: /posts
+                - verb: get
+                  path: '/posts/{id}/comments'
+              execute:
+                - invoke:
+                    title: invoke
+                    timeout: 60
+                    verb: GET
+                    cache-response: time-to-live
+                    cache-ttl: 900
+                    target-url: $(targetUrl)
+          description: Specify target Method and caching options here
+      - gatewayscript:
+          title: PostTransform
+          source: "// Load API Config\nvar util = require('${api.framework.dir}/Util.js');\nvar apiConfig = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}', console);\n\nvar transformer = require('${api.config.dir}/Transformations.js');\n\nvar transformMethodName = apim.getvariable('postTransformMethod');\nvar transformMethod = transformer[transformMethodName];\n\nif (transformMethod != null && typeof transformMethod === \"function\") {\n    var bodi = apim.getvariable('message.body');\n    var output = transformMethod('${api.framework.dir}/', apiConfig, apim);\n    \n    session.output.write(output);\n    apim.output('application/json');\n}"
+          description: Transform Response
       - gatewayscript:
           title: Log Response
           source: >-
             var util = require('${api.framework.dir}/Util.js');
 
-            var apiConfig =
-            util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
+            var apiConfig
+            = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
+
 
 
             // log request headers
