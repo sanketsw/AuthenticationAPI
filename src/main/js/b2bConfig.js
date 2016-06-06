@@ -8,7 +8,7 @@ var logLevel=7;
 var config = [
               {name:"authenticate",
             	  methods:[
-            	           {name:"GET", targetUrl:"http://api-springboot.mybluemix.net/hello"}
+            	           {name:"GET", targetUrl:"http://api-springboot.mybluemix.net/operate/add/4/4"}
             	           ]
               }                           
              ];

@@ -5,7 +5,8 @@ info:
   x-ibm-name: '${artifactId}'
   description: '${project.artifactId}'
   contact:
-    name: Edwin
+    name: Sanket
+    email: sanketsw@au1.ibm.com
 host: $(catalog.host)
 basePath: '/${project.artifactId}/${api.version}'
 paths:
@@ -46,9 +47,23 @@ x-ibm-configuration:
 
 
 
-            // log request headers and audit info
 
-            apiConfig.logHeaders(apim);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // log request headers and Audit Data
+
+            apiConfig.logAuditData(apim);
       - gatewayscript:
           title: Setup
           source: >
@@ -62,11 +77,23 @@ x-ibm-configuration:
 
 
 
+
+
+
+
+
+
             // get the operation and method being executed
 
             var operation = apim.getvariable('operation');
 
             var method  = apim.getvariable('request.verb');
+
+
+
+
+
+
 
 
 
@@ -76,9 +103,21 @@ x-ibm-configuration:
 
 
 
+
+
+
+
+
+
             var preTransformMethod = operation + 'PreTransform';
 
             apim.setvariable('preTransformMethod', preTransformMethod);
+
+
+
+
+
+
 
 
 
@@ -98,7 +137,27 @@ x-ibm-configuration:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             apiConfig.logMessageBody(apim, 'Input');
+
+
+
+
+
+
 
 
 
@@ -108,6 +167,8 @@ x-ibm-configuration:
 
             util.transformAndLog(transformer, transformMethodName,
             '${api.framework.dir}/', apiConfig, apim);
+
+            apim.output('application/json');
       - operation-switch:
           title: Invoke URL switch
           case:
@@ -136,7 +197,11 @@ x-ibm-configuration:
 
 
 
-            apiConfig.logMessageBody(apim, 'Response');
+
+
+            apiConfig.logMessageBody(apim, 'InvokeResponse');
+
+
 
 
 
@@ -158,9 +223,15 @@ x-ibm-configuration:
 
 
 
+
+
+
+
+
+
             // log request headers and audit info
 
-            apiConfig.logHeaders(apim);
+            apiConfig.logAuditData(apim);
   catalogs:
     catalog-name-1:
       properties:
