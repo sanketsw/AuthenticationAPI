@@ -9,29 +9,7 @@ info:
 host: $(catalog.host)
 basePath: '/${project.artifactId}/${api.version}'
 paths:
-  '/posts/{id}/comments':
-    get:
-      responses:
-        '200':
-          description: 200 OK
-    parameters:
-      - name: id
-        type: string
-        required: true
-        in: path
-        description: post id
-  '/posts/{id}':
-    get:
-      responses:
-        '200':
-          description: 200 OK
-    parameters:
-      - name: id
-        type: string
-        required: true
-        in: path
-        description: post id
-  /posts:
+  /authenticate:
     get:
       responses:
         '200':
@@ -52,25 +30,11 @@ x-ibm-configuration:
           case:
             - operations:
                 - verb: get
-                  path: '/posts/{id}/comments'
+                  path: /authenticate
               execute:
                 - gatewayscript:
-                    title: getPostComments
-                    source: "apim.setvariable('operation','getPostComments');"
-            - operations:
-                - verb: get
-                  path: '/posts/{id}'
-              execute:
-                - gatewayscript:
-                    title: getPostById
-                    source: "apim.setvariable('operation','getPostById');"
-            - operations:
-                - verb: get
-                  path: /posts
-              execute:
-                - gatewayscript:
-                    title: getPosts
-                    source: "apim.setvariable('operation','getPosts');"
+                    title: authenticate
+                    source: "apim.setvariable('operation','authenticate');"
       - gatewayscript:
           title: Log Request
           source: >
@@ -82,14 +46,12 @@ x-ibm-configuration:
 
 
 
-            // log request headers
+            // log request headers and audit info
 
             apiConfig.logHeaders(apim);
-
-            apiConfig.logBody(apim);
       - gatewayscript:
           title: Setup
-          source: >-
+          source: >
             // Load API Config
 
             var util = require('${api.framework.dir}/Util.js');
@@ -123,34 +85,35 @@ x-ibm-configuration:
             var postTransformMethod = operation + 'PostTransform';
 
             apim.setvariable('postTransformMethod', postTransformMethod);
-
-
-
-            apiConfig.logger.debug(apim.getvariable('request.uri'));
-
-            apiConfig.logger.debug(apim.getvariable('request.path'));
       - gatewayscript:
           title: PreTransform
-          source: "// Load API Config\nvar util = require('${api.framework.dir}/Util.js');\nvar apiConfig = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}', console);\n\nvar transformer = require('${api.config.dir}/Transformations.js');\n\nvar transformMethodName = apim.getvariable('preTransformMethod');\nvar transformMethod = transformer[transformMethodName];\n\nif (transformMethod != null && typeof transformMethod === \"function\") {\n    var bodi = apim.getvariable('message.body');\n    var output = transformMethod('${api.framework.dir}/', apiConfig, apim);\n    \n    session.output.write(output);\n    apim.output('application/json');\n}"
+          source: >-
+            // Load API Config
+
+            var util = require('${api.framework.dir}/Util.js');
+
+            var apiConfig
+            = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
+            console);
+
+
+
+            apiConfig.logMessageBody(apim, 'Input');
+
+
+
+            var transformer = require('${api.config.dir}/Transformations.js');
+
+            var transformMethodName = apim.getvariable('preTransformMethod');
+
+            util.transformAndLog(transformer, transformMethodName,
+            '${api.framework.dir}/', apiConfig, apim);
       - operation-switch:
           title: Invoke URL switch
           case:
             - operations:
                 - verb: get
-                  path: '/posts/{id}'
-              execute:
-                - invoke:
-                    title: invoke
-                    timeout: 60
-                    verb: GET
-                    cache-response: no-cache
-                    cache-ttl: 900
-                    target-url: $(targetUrl)
-            - operations:
-                - verb: get
-                  path: /posts
-                - verb: get
-                  path: '/posts/{id}/comments'
+                  path: /authenticate
               execute:
                 - invoke:
                     title: invoke
@@ -162,7 +125,27 @@ x-ibm-configuration:
           description: Specify target Method and caching options here
       - gatewayscript:
           title: PostTransform
-          source: "// Load API Config\nvar util = require('${api.framework.dir}/Util.js');\nvar apiConfig = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}', console);\n\nvar transformer = require('${api.config.dir}/Transformations.js');\n\nvar transformMethodName = apim.getvariable('postTransformMethod');\nvar transformMethod = transformer[transformMethodName];\n\nif (transformMethod != null && typeof transformMethod === \"function\") {\n    var bodi = apim.getvariable('message.body');\n    var output = transformMethod('${api.framework.dir}/', apiConfig, apim);\n    \n    session.output.write(output);\n    apim.output('application/json');\n}"
+          source: >-
+            // Load API Config
+
+            var util = require('${api.framework.dir}/Util.js');
+
+            var apiConfig
+            = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
+            console);
+
+
+
+            apiConfig.logMessageBody(apim, 'Response');
+
+
+
+            var transformer = require('${api.config.dir}/Transformations.js');
+
+            var transformMethodName = apim.getvariable('postTransformMethod');
+
+            util.transformAndLog(transformer, transformMethodName,
+            '${api.framework.dir}/', apiConfig, apim);
           description: Transform Response
       - gatewayscript:
           title: Log Response
@@ -175,11 +158,9 @@ x-ibm-configuration:
 
 
 
-            // log request headers
+            // log request headers and audit info
 
             apiConfig.logHeaders(apim);
-
-            apiConfig.logBody(apim);
   catalogs:
     catalog-name-1:
       properties:

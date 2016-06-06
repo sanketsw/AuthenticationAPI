@@ -6,21 +6,11 @@ var version="${api.version}";
 var logLevel=7;
 
 var config = [
-              {name:"getPosts",
+              {name:"authenticate",
             	  methods:[
-            	           {name:"GET", targetUrl:"http://api-springboot.mybluemix.net/operate/add/51/56"}
+            	           {name:"GET", targetUrl:"http://api-springboot.mybluemix.net/hello"}
             	           ]
-              },
-              {name:"getPostById",
-            	  methods:[
-            	           {name:"GET", targetUrl:"http://jsonplaceholder.typicode.com/posts/{id}"}
-            	           ]
-              },
-              {name:"getPostComments",
-            	  methods:[
-            	           {name:"GET", targetUrl:"http://jsonplaceholder.typicode.com/posts/{id}/comments"}
-            	           ]
-              }                            
+              }                           
              ];
 
 exports.getApiConfig = function(frameworkLocation, console) {
