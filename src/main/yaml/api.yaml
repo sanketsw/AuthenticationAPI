@@ -45,6 +45,10 @@ x-ibm-configuration:
             = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
+
+
+
+
             // log request headers and Audit Data
 
             apiConfig.logAuditData(apim);
@@ -59,11 +63,14 @@ x-ibm-configuration:
             = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
+
+
             // get the operation and method being executed
 
             var operation = apim.getvariable('operation');
 
             var method  = apim.getvariable('request.verb');
+
 
 
             // set the targetUrl
@@ -74,6 +81,8 @@ x-ibm-configuration:
             var preTransformMethod = operation + 'PreTransform';
 
             apim.setvariable('preTransformMethod', preTransformMethod);
+
+
 
             var postTransformMethod = operation + 'PostTransform';
 
@@ -89,9 +98,13 @@ x-ibm-configuration:
             = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
-			var data = apim.getvariable('message.body');
+            var data = apim.getvariable('message.body');
+
+
+
 
             apiConfig.logMessageBody(apim, 'Input');
+
 
 
             var transformer = require('${api.config.dir}/Transformations.js');
@@ -128,7 +141,7 @@ x-ibm-configuration:
             = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
 
-			var data = apim.getvariable('message.body');
+            var data = apim.getvariable('message.body');
 
             apiConfig.logMessageBody(apim, 'InvokeResponse');
 
@@ -148,6 +161,8 @@ x-ibm-configuration:
             var apiConfig
             = util.loadApiConfig('${api.framework.dir}/','${api.config.dir}/',apim.getvariable('env.path'),'${project.artifactId}}','${api.version}',
             console);
+
+
 
             // log request headers and audit info
 
