@@ -51,7 +51,7 @@ x-ibm-configuration:
 
             // log request headers and Audit Data
 
-            apiConfig.logAuditData(apim);
+            apiConfig.logAuditData(apim, 'Input');
       - gatewayscript:
           title: Setup
           source: >
@@ -103,7 +103,7 @@ x-ibm-configuration:
 
 
 
-            apiConfig.logMessageBody(apim, 'Input');
+            apiConfig.logPayload(apim, 'Input');
 
 
 
@@ -143,7 +143,7 @@ x-ibm-configuration:
 
             var data = apim.getvariable('message.body');
 
-            apiConfig.logMessageBody(apim, 'InvokeResponse');
+            apiConfig.logPayload(apim, 'InvokeResponse');
 
 
             var transformer = require('${api.config.dir}/Transformations.js');
@@ -166,7 +166,7 @@ x-ibm-configuration:
 
             // log request headers and audit info
 
-            apiConfig.logAuditData(apim);
+            apiConfig.logAuditData(apim, 'Output');
   catalogs:
     catalog-name-1:
       properties:

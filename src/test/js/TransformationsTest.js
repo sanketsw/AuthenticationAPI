@@ -10,6 +10,7 @@ describe("TransformationsTest",function() {
 	// spy object to replace console
 	var console;
 	var apim;
+	var logger;
 	var config = [
 	              {name:"/users",methods:[{name:"GET", targetUrl:"https://randomuser.me/api/users"}]},
 	              {name:"/users/all",methods:[{name:"GET", targetUrl:"https://randomuser.me/api/users/all"}]}
@@ -20,6 +21,10 @@ describe("TransformationsTest",function() {
 				[ 'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency','options' ]);
 		apim = jasmine.createSpyObj('apim',['getvariable']);
 		
+		logger = require('Logger.js').newLogger({ 
+			logLevel: "7"
+		}, console);
+		
 		var log = function(msg) {
 			print(msg);
 		}
@@ -27,13 +32,14 @@ describe("TransformationsTest",function() {
 		console.info.and.callFake(log);
 		console.notice.and.callFake(log);
 		console.debug.and.callFake(log);
+		console.error.and.callFake(log);
 	});
 
 	it("testTransformRequestMessageBody", function() {
 
 		try {
 			var transformations = require("Transformations.js");
-			var api = require("Api.js").newApi(frameworkLocation,"api","1.0.0", config, require('Logger.js').newLogger(7, console));
+			var api = require("Api.js").newApi(frameworkLocation,"api","1.0.0", config, logger, logger);
 			
 			// mock body to transform
 			var body = {

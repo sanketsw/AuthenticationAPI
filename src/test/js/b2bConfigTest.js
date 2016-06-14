@@ -17,6 +17,9 @@ describe("b2bConfigTest",function() {
 		console.debug = function(msg) {
 			print(msg);
 		};
+		console.options = function(msg) {
+			return this;
+		};
 	});
 
 	it("testNoSandboxConfig", function() {
@@ -25,7 +28,7 @@ describe("b2bConfigTest",function() {
 		try {
 			var util = require("Util.js");
 			// pass name and version s null as they are used to construct name of config file. during test the file doesn't contain these name components.
-			apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbo", "","", console);
+			apiConfig = util.loadApiConfig(frameworkLocation, configLocation, "PublicSandbox", "","", console);
 		} catch(e) {
 			console.debug(e);
 		}
